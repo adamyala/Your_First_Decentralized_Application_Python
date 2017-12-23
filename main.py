@@ -1,5 +1,7 @@
+# we'll need the json module to setup some of our frontend dependencies at the end of the script
+import json
 # web3 is needed to interact with eth contracts
-import web3
+from web3 import Web3, HTTPProvider
 # solc is needed to compile our Solidity code
 from solc import compile_source
 
@@ -11,29 +13,62 @@ with open('voting.sol') as file:
 compiled_code = compile_source(''.join(source_code))
 
 # open a connection to the testrpc
-provider = web3.Web3(web3.HTTPProvider('http://localhost:8545'))
+http_provider = HTTPProvider('http://localhost:8545')
+eth_provider = Web3(http_provider).eth
 
-contract_bytecode = compiled_code['<stdin>:Voting']['bin']
+# contract name so we keep our code DRY
+contract_name = 'Voting'
+
+# lets make the code a bit more readable by storing the values in variables
+contract_bytecode = compiled_code[f'<stdin>:{contract_name}']['bin']
+# the contract abi is important. it's a json representation of our smart contract. this
+# allows other APIs like JavaScript to understand how to interact with our contract without
+# reverse engineering our compiled code
+contract_abi = compiled_code[f'<stdin>:{contract_name}']['abi']
+
 # create a contract factory. we'll use this to deploy any number of 
 # instances of the contract to the chain
-token_contract_factory = web3.contract.construct_contract_factory(
-    web3=provider,
-    abi=compiled_code['<stdin>:Voting']['abi'],
-    code=contract_bytecode,
-    code_runtime=compiled_code['<stdin>:Voting']['bin-runtime'],
-    source=source_code,
+contract_factory = eth_provider.contract(
+    abi=contract_abi,
+    bytecode=contract_bytecode,
 )
-token_contract_factory.bytecode = contract_bytecode
 
-# use our factory to create a specific instance of the Voting contract
-token_contract = token_contract_factory.factory(provider, 'Voting')
 # we'll use one of our default accounts to deploy from
-default_account = provider.eth.accounts[0]
-# we deploy our contract to the chain and pass in a list of the args needed to 
-# initialize the Solidity contract
-token_contract.deploy(
+default_account = eth_provider.accounts[0]
+
+# here we deploy the smart contract
+# two things are passed into the deploy function:
+#   1. info about how we want to deploy to the chain
+#   2. the arguments to pass the smart contract constructor
+# the deploy() function returns a transaction hash. this is like the id of the
+# transaction that initially put the contract on the chain
+transaction_hash = contract_factory.deploy(
+    # the bare minimum info we give about the deployment is which ethereum account
+    # is paying the gas to put the contract on the chain
     transaction={
         'from': default_account,
     },
-    args=[['Rama', 'Nick', 'Jose']],
+    # here was pass in a list of smart contract constructor arguments
+    # our contract constructor takes only one argument, a list of candidate names
+    args=[
+        ['Rama', 'Nick', 'Jose'],
+    ],
 )
+
+# if we want our frontend to use our deployed contract as it's backend, the frontend
+# needs to know the address where the contract is located. we use the id of the transaction
+# to get the full transaction details, then we get the contract address from there
+transaction_receipt = eth_provider.getTransactionReceipt(transaction_hash)
+contract_address = transaction_receipt['contractAddress']
+
+# we don't want to be copy and pasting json and hex addresses into our javascript file
+# so we will write the abi (remember this is the json representation of our contract) and the
+# contract address to .js files
+abi_json_string = json.dumps(contract_abi)
+abi_js = f'const abi = {abi_json_string};'
+with open('abi.js', 'w') as outfile:
+    outfile.write(abi_js)
+
+address_js = f'const contractAddress = "{contract_address}";'
+with open('address.js', 'w') as outfile:
+    outfile.write(address_js)

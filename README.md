@@ -1,35 +1,41 @@
 # Your_First_Decentralized_Application_Python
 
-This code borrows HEAVILY from https://github.com/llSourcell/Your_First_Decentralized_Application
+This code borrows heavily from [llSourcell's turtorial](https://github.com/llSourcell/Your_First_Decentralized_Application) which in turn borrows heavily from [maheshmurthy's tutorial.](https://github.com/maheshmurthy/ethereum_voting_dapp)
 
-Please head over there and toss a star on the repository. llSourcell created a wonderful tutorial to learn from.
+Please head over to each and toss a star on the repositories. Both of them created a wonderful tutorials to learn from.
 
 ## Overview
 
-The functionality of this repo is nearly identical to Your_First_Decentralized_Application but the backend implementation is done in python!
+We will be building a decentralized voting application!
+
+<a href="https://i.gyazo.com/2adcb09f847900d4394607c9646123db.gif"><img src="https://i.gyazo.com/2adcb09f847900d4394607c9646123db.gif"/></a>
+
+The functionality of this repo is nearly identical to llSourcell's but the backend implementation is done in python!
 
 ## Setup
 
-1. Create a virtual environment
+1. Create and activate a virtual environment
 1. Install dependencies with `pip install -r requirements.txt`
-1. Install the `testrpc` command line tool with `npm install -g ethereumjs-testrpc`. I have found the JavaScript tooling for testrpc to be fantastic and easy to use
+1. Install the [ganache-cli](https://github.com/trufflesuite/ganache-cli) command line tool with `npm install -g ganache-cli`
+   1. **What does this cli do?** It runs an ethereum node locally. Normally we'd have to download a lot of blockchain transactions and run a test ethereum node locally. This tool lets us run a small local node for easy peasey development. This tool used to be called the `testrpc`.
+   2. **Uh... This tool isn't python...** True, but I have found the JavaScript tooling for testrpc to be fantastic and easy to use. If it's an issue, toss up a PR and we can find an easy python alternative.
 
 ## Usage
 
-Open up two tabs. In the first tab run `testrpc`. This will start a block chain locally that we can play with. In the second tab activate your virtual environment and run `python main.py`.
+Open up two tabs. In the first tab run `ganache-cli`. This will start a block chain locally that we can play with. In the second tab activate your virtual environment and run `python main.py`.
 
-After `main.py` finishes running, you'll notice something similar to:
+After the python file runs you should see something like:
 ```
-  Transaction: 0x0a0a2e25665abb6facf1b66bc561740a488704e06125d7fe60ddea94a04a493b
-  Contract created: 0x4c34619c8a98cb91cd3d5da46ef89bdaf5ed50e6
+  Transaction: 0xd3d96eb1d0b8ca8b327d0eca60ff405d0000c5cd249d06712877effbcf73095f
+  Contract created: 0x9e4fab9629b8768730d107ae909567974c4c8e35
   Gas usage: 352112
-  Block Number: 1
-  Block Time: Thu Oct 26 2017 16:06:40 GMT+0100 (BST)
+  Block Number: 11
+  Block Time: Sat Dec 23 2017 22:31:13 GMT+0200 (SAST)
 ```
-in the first terminal tab. This is the contract getting deployed to your local chain.
+in the first tab. This is your contract being deployed to the chain on your local node!
 
-The value we want is the address code after `Contract created: `. Copy the address value and go into `index.js`. Replace the address value of `const contractAddress` with the value you copied.
+`main.py` is where the bulk of our logic happens. It deploys our smart contract to our test ethereum node and also generates the two `.js` files that tell our frontend how to use our contract. `main.py` and `voting.sol` are heavily commented so please give those a read to understand what each is doing.
 
-Lastly open `index.html` in your browser of choice. The web application will connect to testrpc and use it as the backend.
+Next open `index.html` in your browser of choice. The web application will connect to testrpc and use it as the backend.
 
 Congrats! You setup your first decentralized application with python!
