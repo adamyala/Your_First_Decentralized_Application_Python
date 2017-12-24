@@ -14,6 +14,8 @@ The functionality of this repo is nearly identical to llSourcell's but the backe
 
 ## Setup
 
+This tutorial requires Python 3.6+
+
 1. Create and activate a virtual environment
 1. Install dependencies with `pip install -r requirements.txt`
 1. Install the [ganache-cli](https://github.com/trufflesuite/ganache-cli) command line tool with `npm install -g ganache-cli`
