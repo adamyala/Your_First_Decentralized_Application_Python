@@ -37,7 +37,7 @@ contract_factory = eth_provider.contract(
 # payment of ethereum called "gas". if we were running an actual test ethereum node locally,
 # then we'd have to go on the test net and get some free ethereum to play with. that is beyond
 # the scope of this tutorial so we're using a mini local node that has unlimited ethereum and
-# the only chain we're using it our own local one
+# the only chain we're using is our own local one
 default_account = eth_provider.accounts[0]
 
 # here we deploy the smart contract
