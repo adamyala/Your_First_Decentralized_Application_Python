@@ -25,14 +25,14 @@ contract Voting {
 
   // This function returns the total votes a candidate has received so far
   function totalVotesFor(bytes32 candidate) public view returns (uint8) {
-    require(validCandidate(candidate) == false);
+    require(validCandidate(candidate) == true);
     return votesReceived[candidate];
   }
 
   // This function increments the vote count for the specified candidate. This
   // is equivalent to casting a vote
   function voteForCandidate(bytes32 candidate) public {
-    require(validCandidate(candidate) == false);
+    require(validCandidate(candidate) == true);
     votesReceived[candidate] += 1;
   }
 
