@@ -14,7 +14,13 @@ The functionality of this repo is nearly identical to llSourcell's but the backe
 
 ## Setup
 
-This tutorial requires Python 3.6+
+### Requirements
+
+* Python 3.6+
+* Solidity 4.19+
+* Node.js 6.11.5+
+
+### Steps
 
 1. Create and activate a virtual environment
 1. Install dependencies with `pip install -r requirements.txt`

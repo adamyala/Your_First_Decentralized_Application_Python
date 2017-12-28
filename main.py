@@ -21,10 +21,10 @@ contract_name = 'Voting'
 
 # lets make the code a bit more readable by storing the values in variables
 contract_bytecode = compiled_code[f'<stdin>:{contract_name}']['bin']
+contract_abi = compiled_code[f'<stdin>:{contract_name}']['abi']
 # the contract abi is important. it's a json representation of our smart contract. this
 # allows other APIs like JavaScript to understand how to interact with our contract without
 # reverse engineering our compiled code
-contract_abi = compiled_code[f'<stdin>:{contract_name}']['abi']
 
 # create a contract factory. we'll use this to deploy any number of 
 # instances of the contract to the chain
@@ -33,7 +33,11 @@ contract_factory = eth_provider.contract(
     bytecode=contract_bytecode,
 )
 
-# we'll use one of our default accounts to deploy from
+# we'll use one of our default accounts to deploy from. every write to the chain requires a
+# payment of ethereum called "gas". if we were running an actual test ethereum node locally,
+# then we'd have to go on the test net and get some free ethereum to play with. that is beyond
+# the scope of this tutorial so we're using a mini local node that has unlimited ethereum and
+# the only chain we're using is our own local one
 default_account = eth_provider.accounts[0]
 
 # here we deploy the smart contract
