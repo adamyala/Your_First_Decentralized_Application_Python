@@ -30,7 +30,9 @@ The functionality of this repo is nearly identical to llSourcell's but the backe
 
 ## Usage
 
-Open up two tabs. In the first tab run `ganache-cli`. This will start a block chain locally that we can play with. In the second tab activate your virtual environment and run `python main.py`.
+Open up two tabs. In the first tab run `ganache-cli`. This will start a block chain locally that we can play with.
+
+In the second tab activate your virtual environment and run `FLASK_APP=main.py flask run`. This will start our little flask app, deploying our contract in the process.
 
 After the python file runs you should see something like:
 ```
