@@ -37,7 +37,7 @@ After the python file runs you should see something like:
   Transaction: 0xd3d96eb1d0b8ca8b327d0eca60ff405d0000c5cd249d06712877effbcf73095f
   Contract created: 0x9e4fab9629b8768730d107ae909567974c4c8e35
   Gas usage: 352112
-  Block Number: 11
+  Block Number: 1
   Block Time: Sat Dec 23 2017 22:31:13 GMT+0200 (SAST)
 ```
 in the first tab. This is your contract being deployed to the chain on your local node!
