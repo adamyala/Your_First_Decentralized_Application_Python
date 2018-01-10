@@ -14,7 +14,9 @@ from web3.contract import ConciseContract
 app = Flask(__name__)
 
 # the candidates we're allowing people to vote for
-VOTING_CANDIDATES = ['Rama', 'Nick', 'Jose']
+# note that each name is being encoded to bytes because our contract 
+# type is bytes32[]
+VOTING_CANDIDATES = ['Rama'.encode(), 'Nick'.encode(), 'Jose'.encode()]
 
 # open a connection to the testrpc
 http_provider = HTTPProvider('http://localhost:8545')
