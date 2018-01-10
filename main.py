@@ -55,7 +55,7 @@ transaction_hash = contract_factory.deploy(
     # here was pass in a list of smart contract constructor arguments
     # our contract constructor takes only one argument, a list of candidate names
     args=[
-        ['Rama', 'Nick', 'Jose'],
+        ['Rama'.encode(), 'Nick'.encode(), 'Jose'.encode()],
     ],
 )
 
