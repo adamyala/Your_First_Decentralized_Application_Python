@@ -23,6 +23,10 @@ contract Voting {
     candidateList = candidateNames;
   }
 
+  /* Accessing class attributes directly with web3py or web3js sometimes leads to 
+  unpredictable behavior. To be safe we create a getter method that returns our 
+  array of candidate names.
+  */
   function getCandidateList() public view returns (bytes32[]) {
     return candidateList;
   }
