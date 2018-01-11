@@ -23,6 +23,14 @@ contract Voting {
     candidateList = candidateNames;
   }
 
+  /* Accessing class attributes directly with web3py or web3js sometimes leads to 
+  unpredictable behavior. To be safe we create a getter method that returns our 
+  array of candidate names.
+  */
+  function getCandidateList() public view returns (bytes32[]) {
+    return candidateList;
+  }
+
   // This function returns the total votes a candidate has received so far
   function totalVotesFor(bytes32 candidate) public view returns (uint8) {
     require(validCandidate(candidate) == true);
