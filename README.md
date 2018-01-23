@@ -8,7 +8,7 @@ Please head over to each and toss a star on the repositories. Both of them creat
 
 We will be building a decentralized voting application!
 
-<a href="https://i.gyazo.com/2adcb09f847900d4394607c9646123db.gif"><img src="https://i.gyazo.com/2adcb09f847900d4394607c9646123db.gif"/></a>
+<a href="https://i.gyazo.com/02db73ac15a830c1ee0a1903dde91b2a.gif"><img src="https://i.gyazo.com/02db73ac15a830c1ee0a1903dde91b2a.gif"/></a>
 
 The functionality of this repo is nearly identical to llSourcell's but the entire implementation is done in python!
 
