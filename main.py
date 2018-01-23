@@ -134,6 +134,6 @@ def index():
 if __name__ == '__main__':
     # set debug=True for easy development and experimentation
     # set use_reloader=False. when this is set to True it initializes the flask app twice. usually
-    # this isn't a problem, but since we deploy out contract during initialization it ends up getting
+    # this isn't a problem, but since we deploy our contract during initialization it ends up getting
     # deployed twice. when use_reloader is set to False it deploys only once but reloading is disabled
     app.run(debug=True, use_reloader=False)
