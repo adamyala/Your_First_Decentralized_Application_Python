@@ -1,40 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Hello World DApp</title>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-</head>
-<body class="container">
-  <h1>A Simple Hello World Voting Application</h1>
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  {% if alert %}
-  <div class="alert alert-warning">
-    {{ alert }}
-  </div>
-  {% endif %}
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Candidate</th>
-          <th>Votes</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for candidate, votes in candidates.items() %}
-        <tr>
-          <td>{{ candidate }}</td>
-          <td>{{ votes }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  <form action="" method="post">
-    <input type="text" name="candidate" />
-    <input type="submit" value="Vote" class="btn btn-primary"/>
-  </form>
-</body>
+        <title>Hello World DApp</title>
+    </head>
+    <body class="container">
+
+        <div class="row">
+            <div class="col">
+                <h1>A Simple Hello World Voting Application</h1>
+                {% if alert %}
+                    <div class="alert alert-warning">
+                        {{ alert }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Candidate</th>
+                            <th>Votes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for candidate, votes in candidates.items() %}
+                            <tr>
+                                <td>{{ candidate }}</td>
+                                <td>{{ votes }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <form action="." method="post">
+                    <div class="form-group row">
+                        <label for="candidateInput" class="col-md-3 col-form-label">Candidate Name:</label>
+                        <div class="col-md-3">
+                            <input id="candidateInput" type="text" name="candidate" class="form-control"/>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Vote</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
 </html>
