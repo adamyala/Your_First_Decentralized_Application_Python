@@ -9,10 +9,6 @@ from solc import compile_source
 from web3 import Web3, HTTPProvider
 # we'll use ConciseContract to interact with our specific instance of the contract
 from web3.contract import ConciseContract
-# when candidate names are used by the smart contract they need to be in bytes but
-# when we use them in python we want them as strings. here we import two methods from
-# web3 that make our converting between the two easier
-from web3.main import to_text, to_bytes
 
 # initialize our flask app
 app = Flask(__name__)
@@ -101,7 +97,7 @@ def index():
     candidate_name = request.form.get('candidate')
     if request.method == 'POST' and candidate_name:
         # if we want to pass a candidate name to our contract then we have to convert it to bytes
-        candidate_name_bytes = to_bytes(text=candidate_name)
+        candidate_name_bytes = candidate_name.encode()
         try:
             # the typical behavior of a solidity function is to validate inputs before
             # executing the function. remember that work on the chain is permanent so
@@ -122,10 +118,10 @@ def index():
     candidates = {}
     for candidate_name in candidate_names:
         votes_for_candidate = contract_instance.totalVotesFor(candidate_name)
-        # we have to cast the candidate_name back into a string. we get it back as bytes32
-        # we also want to strip the tailing \x00 empty bytes if our names we shorter than 32 bytes
-        # if we don' string the bytes then our page will say "Rama\x00\x00\x00\x00\x00\x00\x00\x00"
-        candidate_name_string = to_text(candidate_name).rstrip('\x00')
+        # we have to convert the candidate_name back into a string. we get it back as bytes32
+        # we also want to strip the tailing \x00 empty bytes if our names were shorter than 32 bytes
+        # if we don't strip the bytes then our page will say "Rama\x00\x00\x00\x00\x00\x00\x00\x00"
+        candidate_name_string = candidate_name.decode().rstrip('\x00')
         candidates[candidate_name_string] = votes_for_candidate
 
     return render_template('index.html', candidates=candidates, alert=alert)
