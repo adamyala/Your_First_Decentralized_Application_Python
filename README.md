@@ -1,4 +1,6 @@
 # Your_First_Decentralized_Application_Python
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fadamyala%2FYour_First_Decentralized_Application_Python.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fadamyala%2FYour_First_Decentralized_Application_Python?ref=badge_shield)
+
 
 This code borrows heavily from [llSourcell's turtorial](https://github.com/llSourcell/Your_First_Decentralized_Application) which in turn borrows heavily from [maheshmurthy's tutorial.](https://github.com/maheshmurthy/ethereum_voting_dapp)
 
@@ -49,3 +51,6 @@ in the first tab. This is your contract being deployed to the chain on your loca
 Next open http://127.0.0.1:5000/ in your browser of choice. The web application will connect to our deployed contract and use it as the backend.
 
 Congrats! You setup your first decentralized application with python!
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fadamyala%2FYour_First_Decentralized_Application_Python.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fadamyala%2FYour_First_Decentralized_Application_Python?ref=badge_large)
