@@ -1,4 +1,4 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.23;
 // We have to specify what version of compiler this code will compile with
 
 contract Voting {
@@ -19,7 +19,7 @@ contract Voting {
   deploy the contract to the blockchain. When we deploy the contract,
   we will pass an array of candidates who will be contesting in the election
   */
-  function Voting(bytes32[] candidateNames) public {
+  constructor(bytes32[] candidateNames) public {
     candidateList = candidateNames;
   }
 
