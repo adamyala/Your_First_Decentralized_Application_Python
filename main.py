@@ -56,14 +56,14 @@ contract_abi = compiled_code[f'<stdin>:{contract_name}']['abi']
 # reverse engineering our compiled code
 
 # create a contract factory. the contract factory contains the information about the
-# contract that we probably will not change.
+# contract that we probably will not change later in the deployment script.
 contract_factory = eth_provider.contract(
     abi=contract_abi,
     bytecode=contract_bytecode,
 )
 
-# here was pass in a list of smart contract constructor arguments our contract constructor
-# takes only one argument, a list of candidate names the contract constructor contains
+# here we pass in a list of smart contract constructor arguments. our contract constructor
+# takes only one argument, a list of candidate names. the contract constructor contains
 # information that we might want to change. below we pass in our list of voting candidates.
 # the factory -> constructor design pattern gives us some flexibility when deploying contracts.
 # if we wanted to deploy two contracts, each with different candidates, we could call the
