@@ -3,10 +3,13 @@
 # this tutorial so the flask code won't be commented. that way we can focus on
 # how we're working with our smart contract
 from flask import Flask, request, render_template
+
 # solc is needed to compile our Solidity code
 from solc import compile_source
+
 # web3 is needed to interact with eth contracts
 from web3 import Web3, HTTPProvider
+
 # we'll use ConciseContract to interact with our specific instance of the contract
 from web3.contract import ConciseContract
 
@@ -14,9 +17,9 @@ from web3.contract import ConciseContract
 app = Flask(__name__)
 
 # the candidates we're allowing people to vote for
-# note that each name is being encoded to bytes because our contract 
+# note that each name is in bytes because our contract
 # type is bytes32[]
-VOTING_CANDIDATES = ['Rama'.encode(), 'Nick'.encode(), 'Jose'.encode()]
+VOTING_CANDIDATES = [b'Rama', b'Nick', b'Jose']
 
 # open a connection to the testrpc
 http_provider = HTTPProvider('http://localhost:8545')
@@ -52,27 +55,25 @@ contract_abi = compiled_code[f'<stdin>:{contract_name}']['abi']
 # allows other APIs like JavaScript to understand how to interact with our contract without
 # reverse engineering our compiled code
 
-# create a contract factory. we'll use this to deploy any number of
-# instances of the contract to the chain
+# create a contract factory. the contract factory contains the information about the
+# contract that we probably will not change.
 contract_factory = eth_provider.contract(
     abi=contract_abi,
     bytecode=contract_bytecode,
 )
 
-# here we deploy the smart contract
-# two things are passed into the deploy function:
-#   1. info about how we want to deploy to the chain
-#   2. the arguments to pass the smart contract constructor
-# the deploy() function returns a transaction hash. this is like the id of the
-# transaction that initially put the contract on the chain
-transaction_hash = contract_factory.deploy(
-    # the bare minimum info we give about the deployment is which ethereum account
-    # is paying the gas to put the contract on the chain
-    transaction=transaction_details,
-    # here was pass in a list of smart contract constructor arguments
-    # our contract constructor takes only one argument, a list of candidate names
-    args=[VOTING_CANDIDATES],
-)
+# here was pass in a list of smart contract constructor arguments our contract constructor
+# takes only one argument, a list of candidate names the contract constructor contains
+# information that we might want to change. below we pass in our list of voting candidates.
+# the factory -> constructor design pattern gives us some flexibility when deploying contracts.
+# if we wanted to deploy two contracts, each with different candidates, we could call the
+# constructor() function twice, each time with different candidates.
+contract_constructor = contract_factory.constructor(VOTING_CANDIDATES)
+
+# here we deploy the smart contract. the bare minimum info we give about the deployment is which
+# ethereum account is paying the gas to put the contract on the chain. the transact() function
+# returns a transaction hash. this is like the id of the contract on the chain
+transaction_hash = contract_constructor.transact(transaction_details)
 
 # if we want our frontend to use our deployed contract as it's backend, the frontend
 # needs to know the address where the contract is located. we use the id of the transaction
@@ -110,7 +111,7 @@ def index():
         except ValueError:
             alert = f'{candidate_name} is not a voting option!'
 
-    # the web3py wrapper will take the bytes32[] type returned by .getCandidateList()
+    # the web3py wrapper will take the bytes32[] type returned by getCandidateList()
     # and convert it to a list of strings
     candidate_names = contract_instance.getCandidateList()
     # solidity doesn't yet understand how to return dict/mapping/hash like objects
