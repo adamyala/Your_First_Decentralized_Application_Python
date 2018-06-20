@@ -16,12 +16,12 @@ from web3.contract import ConciseContract
 # initialize our flask app
 app = Flask(__name__)
 
-# the candidates we're allowing people to vote for
-# note that each name is in bytes because our contract
-# type is bytes32[]
+# declare the candidates we're allowing people to vote for.
+# note that each name is in bytes because our contract variable
+# candidateList is type bytes32[]
 VOTING_CANDIDATES = [b'Rama', b'Nick', b'Jose']
 
-# open a connection to the testrpc
+# open a connection to the local ethereum node
 http_provider = HTTPProvider('http://localhost:8545')
 eth_provider = Web3(http_provider).eth
 
@@ -37,7 +37,6 @@ transaction_details = {
     'from': default_account,
 }
 
-# if not app.config.get('CONTRACT_ADDRESS'):
 # load our Solidity code into an object
 with open('voting.sol') as file:
     source_code = file.readlines()
@@ -45,10 +44,10 @@ with open('voting.sol') as file:
 # compile the contract
 compiled_code = compile_source(''.join(source_code))
 
-# contract name so we keep our code DRY
+# store contract_name so we keep our code DRY
 contract_name = 'Voting'
 
-# lets make the code a bit more readable by storing the values in variables
+# lets make the code a bit more readable by storing these values in variables
 contract_bytecode = compiled_code[f'<stdin>:{contract_name}']['bin']
 contract_abi = compiled_code[f'<stdin>:{contract_name}']['abi']
 # the contract abi is important. it's a json representation of our smart contract. this
@@ -72,7 +71,7 @@ contract_constructor = contract_factory.constructor(VOTING_CANDIDATES)
 
 # here we deploy the smart contract. the bare minimum info we give about the deployment is which
 # ethereum account is paying the gas to put the contract on the chain. the transact() function
-# returns a transaction hash. this is like the id of the contract on the chain
+# returns a transaction hash. this is like the id of the transaction on the chain
 transaction_hash = contract_constructor.transact(transaction_details)
 
 # if we want our frontend to use our deployed contract as it's backend, the frontend
@@ -84,7 +83,7 @@ contract_address = transaction_receipt['contractAddress']
 contract_instance = eth_provider.contract(
     abi=contract_abi,
     address=contract_address,
-    # when a contract instance is converted to python, way call the native solidity
+    # when a contract instance is converted to python, we call the native solidity
     # functions like: contract_instance.call().someFunctionHere()
     # the .call() notation becomes repetitive so we can pass in ConciseContract as our
     # parent class, allowing us to make calls like: contract_instance.someFunctionHere()
