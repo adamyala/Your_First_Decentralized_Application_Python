@@ -23,6 +23,7 @@ The functionality of this repo is nearly identical to llSourcell's but the entir
 ### Steps
 
 1. Create and activate a virtual environment
+1. Install the Solidity compiler, solc, on your local machine. The docs for the current version (v0.5.9) are available [here](https://solidity.readthedocs.io/en/v0.5.9/installing-solidity.html). 
 1. Install dependencies with `pip install -r requirements.txt`
 1. Install the [ganache-cli](https://github.com/trufflesuite/ganache-cli) command line tool with `npm install -g ganache-cli`
    1. **What does this cli do?** It runs an ethereum node locally. Normally we'd have to download a lot of blockchain transactions and run a test ethereum node locally. This tool lets us run a small local node for easy peasey development. This tool used to be called the `testrpc`.
