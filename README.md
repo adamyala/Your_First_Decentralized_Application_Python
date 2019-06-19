@@ -16,9 +16,9 @@ The functionality of this repo is nearly identical to llSourcell's but the entir
 
 ### Requirements
 
-* Python 3.6+
-* Solidity 4.23+
-* Node.js 9.8+
+* Python 3.7+
+* Solidity 0.4.25+
+* Node.js 10.11+
 
 ### Steps
 
