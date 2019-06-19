@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.1;
 // We have to specify what version of compiler this code will compile with
 
 contract Voting {
@@ -19,7 +19,7 @@ contract Voting {
   deploy the contract to the blockchain. When we deploy the contract,
   we will pass an array of candidates who will be contesting in the election
   */
-  constructor(bytes32[] candidateNames) public {
+  constructor(bytes32[] memory candidateNames) public {
     candidateList = candidateNames;
   }
 
@@ -27,7 +27,7 @@ contract Voting {
   unpredictable behavior. To be safe we create a getter method that returns our
   array of candidate names.
   */
-  function getCandidateList() public view returns (bytes32[]) {
+  function getCandidateList() public view returns (bytes32[] memory) {
     return candidateList;
   }
 
