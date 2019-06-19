@@ -14,7 +14,7 @@ from web3 import Web3, HTTPProvider
 from web3.contract import ConciseContract
 
 # initialize our flask app
-app = Flask(__name__, template_folder='../templates/')
+app = Flask(__name__)
 
 # declare the candidates we're allowing people to vote for.
 # note that each name is in bytes because our contract variable
@@ -38,7 +38,7 @@ transaction_details = {
 }
 
 # load our Solidity code into an object
-with open('../voting.sol') as file:
+with open('voting.sol') as file:
     source_code = file.readlines()
 
 # compile the contract
@@ -56,7 +56,10 @@ contract_abi = compiled_code[f'<stdin>:{contract_name}']['abi']
 
 # create a contract factory. the contract factory contains the information about the
 # contract that we probably will not change later in the deployment script.
-contract_factory = eth_provider.contract(abi=contract_abi, bytecode=contract_bytecode)
+contract_factory = eth_provider.contract(
+    abi=contract_abi,
+    bytecode=contract_bytecode,
+)
 
 # here we pass in a list of smart contract constructor arguments. our contract constructor
 # takes only one argument, a list of candidate names. the contract constructor contains
